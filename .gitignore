@@ -1,0 +1,42 @@
+# Composer dependencies
+/vendor/
+composer.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs and debug files
+storage/logs/
+*.log
+
+# Cache files
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+
+# Uploaded files
+public/uploads/
+storage/app/public/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Node modules (if frontend assets are included)
+node_modules/
+package-lock.json
+yarn.lock
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Backup and temp files
+*.bak
+*.swp
+*.swo
+*.tmp

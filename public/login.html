@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="register.html">Register</a></p>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+    $("#loginForm").submit(function (event) {
+        event.preventDefault();
+        
+        var formData = {
+            email: $("#email").val(),
+            password: $("#password").val()
+        };
+
+        $.ajax({
+            url: "/api/auth/login.php",
+            type: "POST",
+            contentType: "application/json",  // Set content type to JSON
+            data: JSON.stringify(formData),   // Convert formData to JSON string
+            success: function (response) {
+                console.log(response);
+                localStorage.setItem("token", response.token);
+                window.location.href = "favorites.html";
+            },
+            error: function (xhr) {
+                console.log("Error:", xhr.responseText);
+                alert("Invalid credentials!");
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>
