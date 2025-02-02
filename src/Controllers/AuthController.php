@@ -14,6 +14,13 @@ class AuthController {
     private $secretKey;
     protected $userService;
 
+    /**
+     * Constructor for the AuthController class
+     *
+     * @param AuthService $userService Dependency injection of the user service
+     *
+     * @return void
+     */
     public function __construct(AuthService $userService) {
         global $config;
         $this->db = Database::getInstance()->getConnection();
@@ -21,12 +28,17 @@ class AuthController {
         $this->userService = $userService;
     }
 
+    /**
+     * Registers a new user
+     *
+     * @param string $email     The new user's email
+     * @param string $password  The new user's password
+     *
+     * @return array  The response message
+     */
+
     public function register($email, $password) {
-        
-        // Call the createUser method in AuthService
         $register = $this->userService->register($email, $password, $this->secretKey);
-    
-        // Check the result from the createUser method
         if ($register) { 
             return ["message" => "Registration successful."];
         } else {
@@ -37,13 +49,9 @@ class AuthController {
 
     public function login($email, $password) {
         try {
-            // Assuming the login logic is handled by AuthService
             $login = $this->userService->login($email, $password, $this->secretKey);
-    
-            // If login is successful, return the JWT token in a JSON format
             echo json_encode(["token" => $login]);
         } catch (Exception $e) {
-            // If there's an error, return an error message with a status code
             http_response_code(401);  // Unauthorized error code
             echo json_encode(["error" => $e->getMessage()]);
         }

@@ -12,49 +12,55 @@ class AuthService {
         $this->userModel = new User();
     }
 
-    // Register a new user
+    /**
+     * Registers a new user
+     *
+     * @param string $email    The new user's email address
+     * @param string $password The new user's password
+     * @param string $token     The JWT token used to authenticate the registration
+     *
+     * @return array The newly created user's data
+     *
+     * @throws Exception If the user already exists
+     */
     public function register($email, $password, $token) {
         
         return $this->userModel->createUser($email, $password, $token);
     }
-
-    // Login user and generate JWT token
+    
+    /**
+     * Logs in a user
+     *
+     * @param string $email    The user's email address
+     * @param string $password The user's password
+     * @param string $token     The JWT token used to authenticate the login
+     *
+     * @return string The JWT token for the logged in user
+     *
+     * @throws Exception If the user is not found or the credentials are invalid
+     */
     public function login($email, $password, $token) {
-        // Get the user by email
+
         $user = $this->userModel->getUserByEmail($email);
-        
-        // Check if the user exists
+
         if (!$user) {
             throw new Exception('User not found.');
         }
-        // Trim spaces just in case
+
         $password = trim($password);
     
-        // Verify the password
         if (!$user || !password_verify($password, $user['password'])) {
             throw new Exception('Invalid credentials');
         }
-    
-        // Generate JWT token
+
         $payload = [
             'iat' => time(),
-            'exp' => time() + 8600, // Token expires in 1 hour
+            'exp' => time() + 8600,
             'sub' => $user['id']
         ];
     
-        // Encode the payload into a JWT
         $jwt = JWT::encode($payload, $token, 'HS256');
         return $jwt;
     }
     
-    
-    // Verify JWT token
-    public function verifyToken($jwt) {
-        try {
-            $decoded = JWT::decode($jwt, 'your-secret-key', ['HS256']);
-            return $decoded->sub;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
 }

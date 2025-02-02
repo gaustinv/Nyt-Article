@@ -10,8 +10,6 @@ class ArticleController {
     private $articleService;
     private $nytKey;
     private $nytLink;
-
-
     public function __construct(ArticleService $articleService) {
         global $config;
         if (!isset($config['nyt_api'])) {
@@ -26,8 +24,15 @@ class ArticleController {
             die("NYT API configuration is missing or invalid.");
         }
     }
-
-    // Function to handle search for articles
+    
+    /**
+     * Searches for articles based on a query and page number
+     *
+     * @param string $query The search query
+     * @param int $page The page number to fetch (starts at 1)
+     *
+     * @return array An array containing the articles' details, or an error message
+     */
     public function searchArticles($query, $page = 1) {
         try {
             $articles = $this->articleService->fetchArticles($query, $page, $this->nytKey, $this->nytLink);

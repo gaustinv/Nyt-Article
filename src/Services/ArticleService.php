@@ -14,10 +14,20 @@ class ArticleService {
         $this->favoriteModel = new Favorite();
     }
 
-    // Fetch articles from NYT API
+    /**
+     * Fetches articles from the New York Times API based on a query and page number
+     *
+     * @param string $query The search query
+     * @param int $page The page number to fetch (starts at 1)
+     * @param string $apiKey The New York Times API key
+     * @param string $apiLink The New York Times API link
+     *
+     * @return array An array containing the articles' details
+     * @throws Exception If the API request fails
+     */
     public function fetchArticles($query, $page = 1, $apiKey, $apiLink) {
         $url = $apiLink;
-        $apiKey = $apiKey;  // Use a valid NYT API key
+        $apiKey = $apiKey;
 
         $response = $this->client->request('GET', $url, [
             'query' => [
@@ -29,16 +39,5 @@ class ArticleService {
 
         $data = json_decode($response->getBody()->getContents(), true);
         return $data['response']['docs'];
-    }
-
-    // Retrieve article details
-    public function getArticleDetails($articleId) {
-        // This is just a placeholder logic for fetching article details
-        return $this->client->request('GET', "https://api.nytimes.com/svc/search/v2/articlesearch.json", [
-            'query' => [
-                'articleId' => $articleId,
-                'api-key' => 'your-nyt-api-key'
-            ]
-        ]);
     }
 }

@@ -10,19 +10,25 @@ use Exception;
 $config = require_once realpath('../../../config/config.php');
 
 class JwtController {
-    private static $secretKey = '';  // Declare as static
-
-    // Initialize the secret key from config
+    private static $secretKey = ''; 
     public static function init() {
         global $config;
         if (isset($config['jwt']['secret_key'])) {
-            self::$secretKey = $config['jwt']['secret_key'];  // ✅ Set the secret key from config
+            self::$secretKey = $config['jwt']['secret_key'];
         } else {
             throw new Exception("Secret key is not set in the configuration.");
         }
     }
 
-    // Function to decode the JWT
+    /**
+     * Decodes a JWT token and returns the payload as an associative array.
+     *
+     * @param string $jwt The JWT token to decode.
+     *
+     * @return array The payload of the JWT token.
+     *
+     * @throws Exception If the secret key is not initialized or if the token is invalid.
+     */
     public static function decode($jwt) {
         try {
             if (empty(self::$secretKey)) {
@@ -37,7 +43,15 @@ class JwtController {
         }
     }
 
-    // Function to encode a JWT
+    /**
+     * Encodes an associative array as a JWT token.
+     *
+     * @param array $data The data to encode into the JWT token.
+     *
+     * @return string The JWT token.
+     *
+     * @throws Exception If the secret key is not initialized.
+     */
     public static function encode($data) {
         global $config;
 
