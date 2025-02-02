@@ -39,6 +39,13 @@ Ensure you have the following installed on your system:
 ```
 
 ## Database Setup
+
+1. **Database schema creation script.**
+   ```sh
+   sqlite3 database.sqlite
+    .read schema.sql
+   ```
+
 ### SQLite Schema
 Create the required tables in `database.sqlite`:
 ```sql
