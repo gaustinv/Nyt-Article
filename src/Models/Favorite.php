@@ -20,13 +20,22 @@ class Favorite {
         return $stmt->execute();
     }
 
-    public function getFavoritesByUser($userId) {
-        $stmt = $this->db->prepare("SELECT * FROM favorites WHERE user_id = :user_id");
-        $stmt->bindParam(':user_id', $userId);
+    public function getFavoritesByUser($userId, $limit, $offset) {
+        $stmt = $this->db->prepare("SELECT * FROM favorites WHERE user_id = :user_id LIMIT :limit OFFSET :offset");
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
+    public function getFavoritesCount($userId) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) as count FROM favorites WHERE user_id = :user_id");
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+    }
+    
     public function removeFavorite($userId, $favoriteId) {
         $stmt = $this->db->prepare("DELETE FROM favorites WHERE user_id = :user_id AND id = :favorite_id");
         $stmt->bindParam(':user_id', $userId);

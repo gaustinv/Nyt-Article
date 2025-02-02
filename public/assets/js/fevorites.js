@@ -2,27 +2,28 @@ let token = localStorage.getItem("token");
     if (!token) {
         window.location.href = "login.html";
     }
-    // Load favorites on page load
-    loadFavorites();
-    // Function to load favorite articles
-    function loadFavorites() {
+    let currentPage = 1;
+    const limit = 5;
+    
+    function loadFavorites(page = 1) {
         $.ajax({
-            url: "api/favorites/get.php",
+            url: `api/favorites/get.php?page=${page}&limit=${limit}`,
             type: "GET",
             headers: { "Authorization": "Bearer " + token },
             dataType: "json",
             success: function (response) {
-                if (Array.isArray(response) && response.length > 0) {
+                if (Array.isArray(response.data) && response.data.length > 0) {
                     $("#favoritesList").empty();
-                    response.forEach(article => {
+                    response.data.forEach(article => {
                         $("#favoritesList").append(`
-                    <li class="list-group-item d-flex justify-content-between">
-                        ${article.title} 
-                        <a href="${article.url}" target="_blank" class="btn btn-info btn-sm">Read</a> 
-                        <button class="btn btn-danger btn-sm remove" data-id="${article.id}">Remove</button>
-                    </li>
-                `);
+                            <li class="list-group-item d-flex justify-content-between">
+                                ${article.title} 
+                                <a href="${article.url}" target="_blank" class="btn btn-info btn-sm">Read</a> 
+                                <button class="btn btn-danger btn-sm remove" data-id="${article.id}">Remove</button>
+                            </li>
+                        `);
                     });
+                    updatePagination(response.total, page);
                 } else {
                     $("#favoritesList").html("<li class='list-group-item'>No favorites found.</li>");
                 }
@@ -33,6 +34,18 @@ let token = localStorage.getItem("token");
             }
         });
     }
+
+    function updatePagination(total, page) {
+        const totalPages = Math.ceil(total / limit);
+        let paginationHtml = "";
+        for (let i = 1; i <= totalPages; i++) {
+            paginationHtml += `<li class="page-item ${i === page ? 'active' : ''}"><a class="page-link" href="#" onclick="loadFavorites(${i})">${i}</a></li>`;
+        }
+        $("#pagination ul").html(paginationHtml);
+    }
+
+        loadFavorites();
+
     // Search button click event
     $("#searchBtn").click(function () {
         let query = $("#searchQuery").val();

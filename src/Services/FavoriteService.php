@@ -22,7 +22,12 @@ class FavoriteService {
     }
 
     // Get all favorites for a user
-    public function getFavorites($userId) {
-        return $this->favoriteModel->getFavoritesByUser($userId);
+    public function getFavorites($userId, $limit, $offset) {
+        return $this->favoriteModel->getFavoritesByUser($userId, $limit, $offset);
     }
+    
+    public function getFavoritesCount($userId) {
+        return $this->favoriteModel->getFavoritesCount($userId);
+    }
+    
 }

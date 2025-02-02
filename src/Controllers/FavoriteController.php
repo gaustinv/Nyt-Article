@@ -25,10 +25,14 @@ class FavoriteController {
         }
     }
 
-    public function getFavorites($userId) {
-        $favorites = $this->favoriteService->getFavorites($userId);
-        return $favorites;
+    public function getFavorites($userId, $limit, $offset) {
+        return $this->favoriteService->getFavorites($userId, $limit, $offset);
     }
+    
+    public function getFavoritesCount($userId) {
+        return $this->favoriteService->getFavoritesCount($userId);
+    }
+    
 
     public function removeFromFavorites($userId, $favoriteId) {
         $result =  $this->favoriteService->removeFavorite($userId, $favoriteId);
