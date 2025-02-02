@@ -16,10 +16,12 @@ let token = localStorage.getItem("token");
                     $("#favoritesList").empty();
                     response.data.forEach(article => {
                         $("#favoritesList").append(`
-                            <li class="list-group-item d-flex justify-content-between">
-                                ${article.title} 
-                                <a href="${article.url}" target="_blank" class="btn btn-info btn-sm">Read</a> 
-                                <button class="btn btn-danger btn-sm remove" data-id="${article.id}">Remove</button>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="flex-grow-1">${article.title}</span>
+                                <div class="d-flex gap-2">
+                                    <a href="${article.url}" target="_blank" class="btn btn-info btn-sm">Read</a> 
+                                    <button class="btn btn-danger btn-sm remove" data-id="${article.id}">Remove</button>
+                                </div>
                             </li>
                         `);
                     });
@@ -34,6 +36,7 @@ let token = localStorage.getItem("token");
             }
         });
     }
+    
 
     function updatePagination(total, page) {
         const totalPages = Math.ceil(total / limit);
