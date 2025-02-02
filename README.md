@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS logs (
 ## API Endpoints
 
 ### 1. Login
-**Endpoint:** `POST /api/login`
+**Endpoint:** `POST /api/auth/login.php`
 - **Payload:**
   ```json
   {
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS logs (
   }
   ```
   ### 2. Register
-**Endpoint:** `POST /api/register`
+**Endpoint:** `POST api/auth/register.php`
 - **Payload:**
   ```json
   {
@@ -86,14 +86,12 @@ CREATE TABLE IF NOT EXISTS logs (
       "password": "password"
   }
   ```
-### 1. Search Articles
-**Endpoint:** `GET /api/articles?query={search_term}&page={page_number}`
+### 3. Favorites
+**Endpoint:** `GET api/favorites/get.php?page=${page}&limit=${limit}`
 
-### 2. View Favorites
-**Endpoint:** `GET /api/favorites?user_id={user_id}`
 
-### 3. Add Favorite
-**Endpoint:** `POST /api/favorites`
+### 4. Add Favorite
+**Endpoint:** `POST /api/favorites/add.php`
 - **Payload:**
   ```json
   {
@@ -104,8 +102,8 @@ CREATE TABLE IF NOT EXISTS logs (
   }
   ```
 
-### 4. Remove Favorite
-**Endpoint:** `DELETE /api/favorites`
+### 5. Remove Favorite
+**Endpoint:** `DELETE /api/favorites/remove.php`
 - **Payload:**
   ```json
   {
