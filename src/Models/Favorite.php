@@ -27,10 +27,10 @@ class Favorite {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function removeFavorite($userId, $articleId) {
-        $stmt = $this->db->prepare("DELETE FROM favorites WHERE user_id = :user_id AND article_id = :article_id");
+    public function removeFavorite($userId, $favoriteId) {
+        $stmt = $this->db->prepare("DELETE FROM favorites WHERE user_id = :user_id AND id = :favorite_id");
         $stmt->bindParam(':user_id', $userId);
-        $stmt->bindParam(':article_id', $articleId);
+        $stmt->bindParam(':favorite_id', $favoriteId);
         return $stmt->execute();
-    }
+    }    
 }

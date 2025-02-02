@@ -30,12 +30,10 @@ class FavoriteController {
         return $favorites;
     }
 
-    public function removeFavorite($userId, $articleId) {
-        $stmt = $this->db->prepare("DELETE FROM favorites WHERE user_id = :user_id AND article_id = :article_id");
-        $stmt->bindParam(':user_id', $userId);
-        $stmt->bindParam(':article_id', $articleId);
-
-        if ($stmt->execute()) {
+    public function removeFromFavorites($userId, $favoriteId) {
+        $result =  $this->favoriteService->removeFavorite($userId, $favoriteId);
+       
+        if ($result) {
             return ["message" => "Article removed from favorites."];
         } else {
             http_response_code(500);

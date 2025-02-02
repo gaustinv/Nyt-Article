@@ -17,8 +17,8 @@ class FavoriteService {
     }
 
     // Remove article from favorites
-    public function removeFavorite($userId, $articleId) {
-        return $this->favoriteModel->removeFavorite($userId, $articleId);
+    public function removeFavorite($userId, $favoriteId) {
+        return $this->favoriteModel->removeFavorite($userId, $favoriteId);
     }
 
     // Get all favorites for a user

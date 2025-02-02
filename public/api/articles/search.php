@@ -43,13 +43,8 @@ try {
         throw new Exception('Invalid response format from ArticleController');
     }
 
-    // Pagination logic
-    $totalHits = count($response);
-    $totalPages = ceil($totalHits / $itemsPerPage);
-
     echo json_encode([
-        'articles' => array_slice($response, ($page - 1) * $itemsPerPage, $itemsPerPage),
-        'total_pages' => $totalPages,
+        'articles' => array_slice($response, 0, 20), // Limit to 20 articles
     ]);
 } catch (Exception $e) {
     echo json_encode(['error' => $e->getMessage()]);

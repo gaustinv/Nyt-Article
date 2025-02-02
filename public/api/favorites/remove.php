@@ -28,10 +28,10 @@ try {
 
     // Get POST data
     $postData = json_decode(file_get_contents("php://input"), true);
-    $articleId = isset($postData['article_id']) ? intval($postData['article_id']) : 0;
+    $favoriteId = isset($postData['favorite_Id']) ? intval($postData['favorite_Id']) : 0;
 
     // Validate input
-    if ($articleId <= 0) {
+    if ($favoriteId <= 0) {
         throw new Exception('Invalid input: article_id is required');
     }
 
@@ -39,7 +39,7 @@ try {
     $favoriteService = new FavoriteService();
     $favoriteController = new FavoriteController($favoriteService);
     // Call method to remove favorite
-    $response = $favoriteController->removeFromFavorites($userId, $articleId);
+    $response = $favoriteController->removeFromFavorites($userId, $favoriteId);
 
     // Validate response
     if (!is_array($response)) {
