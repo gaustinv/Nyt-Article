@@ -1,16 +1,13 @@
 <?php
 namespace App\Controllers;
 
-use App\Database\Database;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use App\Services\AuthService;
-use PDO;
 
 $config = require_once realpath('../../../config/config.php'); // Update path if needed
 
 class AuthController {
-    private $db;
     private $secretKey;
     protected $userService;
 
@@ -23,7 +20,6 @@ class AuthController {
      */
     public function __construct(AuthService $userService) {
         global $config;
-        $this->db = Database::getInstance()->getConnection();
         $this->secretKey = $config['jwt']['secret_key'];
         $this->userService = $userService;
     }
@@ -38,7 +34,7 @@ class AuthController {
      */
 
     public function register($email, $password) {
-        $register = $this->userService->register($email, $password, $this->secretKey);
+        $register = $this->userService->register($email, $password);
         if ($register) { 
             return ["message" => "Registration successful."];
         } else {

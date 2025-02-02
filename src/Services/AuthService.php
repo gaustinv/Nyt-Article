@@ -23,9 +23,9 @@ class AuthService {
      *
      * @throws Exception If the user already exists
      */
-    public function register($email, $password, $token) {
+    public function register($email, $password) {
         
-        return $this->userModel->createUser($email, $password, $token);
+        return $this->userModel->createUser($email, $password);
     }
     
     /**

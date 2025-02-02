@@ -1,12 +1,10 @@
 <?php
 namespace App\Controllers;
 
-use App\Database\Database;
 use App\Services\FavoriteService;
 use PDO;
 
 class FavoriteController {
-    private $db;
     protected $favoriteService;
 
     /**
@@ -15,7 +13,6 @@ class FavoriteController {
      * @param FavoriteService $favoriteService
      */
     public function __construct(FavoriteService $favoriteService) {
-        $this->db = Database::getInstance()->getConnection();
         $this->favoriteService = $favoriteService;
     }
 
