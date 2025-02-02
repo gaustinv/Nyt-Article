@@ -35,7 +35,7 @@ $(document).ready(function () {
             contentType: "application/json",  // Set content type to JSON
             data: JSON.stringify(formData),   // Convert formData to JSON string
             success: function (response) {
-                console.log(response);
+                alert("Registration successful!");
                 localStorage.setItem("token", response.token);
                 window.location.href = "login.html";
             },

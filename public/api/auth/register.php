@@ -27,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $userService = new AuthService();
     $authController = new AuthController($userService);
-    $result = $authController->register(trim($email), trim($password));
+    $response = $authController->register(trim($email), trim($password));
+    echo json_encode($response);
 } else {
     http_response_code(405);
     echo json_encode(["error" => "Method Not Allowed"]);
