@@ -84,28 +84,31 @@ let token = localStorage.getItem("token");
     function displayArticles(data) {
         var results = $("#results");
         results.empty();
-
+    
         if (!data || !Array.isArray(data) || data.length === 0) {
             results.append("<p>No articles found.</p>");
             return;
         }
-
+    
         var articlesHtml = data.map(article => `
-    <div class="col-md-4 mb-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">${escapeHtml(article.abstract)}</h5>
-                <p class="card-text">${escapeHtml(article.lead_paragraph)}</p>
-                <a href="${escapeHtml(article.web_url)}" target="_blank" class="btn btn-primary">Read More</a>
-                <button class="btn btn-secondary addToFavorites" data-title="${escapeHtml(article.abstract)}" data-article_id="${article._id}" data-id="${article.web_url}">Add to Favorites</button>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${escapeHtml(article.abstract)}</h5>
+                        <p class="card-text">${truncateText(escapeHtml(article.lead_paragraph), 20)}</p>
+                        <a href="${escapeHtml(article.web_url)}" target="_blank" class="btn btn-primary">Read More</a>
+                        <button class="btn btn-secondary addToFavorites" 
+                            data-title="${escapeHtml(article.abstract)}" 
+                            data-article_id="${article._id}" 
+                            data-id="${article.web_url}">Add to Favorites</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-`).join("");
-
+        `).join("");
+    
         results.append(`<div class="row">${articlesHtml}</div>`);
     }
-
+    
     // Function to escape HTML to prevent XSS attacks
     function escapeHtml(str) {
         return str.replace(/[&<>"']/g, function (match) {
@@ -117,6 +120,15 @@ let token = localStorage.getItem("token");
                 "'": "&#039;"
             }[match];
         });
+    }
+    
+    // Function to truncate text to a specified number of words
+    function truncateText(text, wordLimit) {
+        if (!text) return "";
+        let words = text.split(" ");
+        return words.length > wordLimit 
+            ? words.slice(0, wordLimit).join(" ") + "..." 
+            : text;
     }
     // Add to Favorites
     $(document).on("click", ".addToFavorites", function () {
