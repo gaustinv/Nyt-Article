@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -17,37 +16,7 @@
         </form>
         <p>Already have an account? <a href="login.html">Login</a></p>
     </div>
-
-    <script>
-
-$(document).ready(function () {
-    $("#registerForm").submit(function (event) {
-        event.preventDefault();
-        
-        var formData = {
-            email: $("#email").val(),
-            password: $("#password").val()
-        };
-
-        $.ajax({
-            url: "api/auth/register.php",
-            type: "POST",
-            contentType: "application/json",  // Set content type to JSON
-            data: JSON.stringify(formData),   // Convert formData to JSON string
-            success: function (response) {
-                alert("Registration successful!");
-                localStorage.setItem("token", response.token);
-                window.location.href = "login.html";
-            },
-            error: function (xhr) {
-                console.log("Error:", xhr.responseText);
-                alert("Registration failed.");
-            }
-        });
-    });
-});
-
-     
-    </script>
 </body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="assets/js/app.js"></script>
 </html>

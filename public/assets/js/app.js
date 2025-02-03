@@ -23,4 +23,29 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#registerForm").submit(function (event) {
+        event.preventDefault();
+        
+        var formData = {
+            email: $("#email").val(),
+            password: $("#password").val()
+        };
+
+        $.ajax({
+            url: "api/auth/register.php",
+            type: "POST",
+            contentType: "application/json",  // Set content type to JSON
+            data: JSON.stringify(formData),   // Convert formData to JSON string
+            success: function (response) {
+                alert("Registration successful!");
+                localStorage.setItem("token", response.token);
+                window.location.href = "login.html";
+            },
+            error: function (xhr) {
+                console.log("Error:", xhr.responseText);
+                alert("Registration failed.");
+            }
+        });
+    });
 });
