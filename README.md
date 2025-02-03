@@ -72,6 +72,17 @@ CREATE TABLE IF NOT EXISTS logs (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 ```
+## Database Log Setup
+
+1. **list logs from table**
+   ```sh
+   sqlite3 database.sqlite
+    SELECT * FROM logs;
+   ```
+## File Log Setup 
+
+2. **list logs**
+**File Path:** `/logs/app.log`
 
 ## API Endpoints
 
@@ -98,6 +109,7 @@ CREATE TABLE IF NOT EXISTS logs (
 ### Header
 **Authorization: Bearer your_generated_token**
 **Content-Type: application/json**
+
 **Endpoint:** `GET http://your-domain.com/api/favorites/get.php?page=1&limit=5`
 
 ### 4. Add Favorite
@@ -137,12 +149,5 @@ CREATE TABLE IF NOT EXISTS logs (
 **Content-Type: application/json**
 
 **Endpoint:** `GET /api/articles/search.php?query=tech&page=1`
-- **Payload:**
-  ```json
-  {
-      "user_id": 1,
-      "id": "123"
-  }
-  ```
 
 
