@@ -7,10 +7,6 @@ composer.lock
 .env.local
 .env.*.local
 
-# Logs and debug files
-storage/logs/
-*.log
-
 # Cache files
 storage/framework/cache/
 storage/framework/sessions/
