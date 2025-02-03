@@ -19,8 +19,13 @@ Ensure you have the following installed on your system:
    composer install
    ```
 
-3. **Set Up Environment Variables**
-   - Update the necessary configurations like database and API keys
+3. **Required Packages**
+    ```sh
+     "require": {
+        "firebase/php-jwt": "^6.11",
+        "guzzlehttp/guzzle": "^7.9",
+    },
+    ```
 
 4. **Run the Project**
    ```sh
