@@ -36,7 +36,7 @@ try {
     $articleController = new ArticleController($articleService);
 
     // Fetch articles
-    $response = $articleController->searchArticles($query, $page);
+    $response = $articleController->searchArticles($query, $page, $userId);
 
     // Validate response
     if (!is_array($response)) {
