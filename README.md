@@ -94,23 +94,49 @@ CREATE TABLE IF NOT EXISTS logs (
   }
   ```
 ### 3. Favorites
-**Endpoint:** `GET api/favorites/get.php?page=${page}&limit=${limit}`
 
+### Header
+**Authorization: Bearer your_generated_token**
+**Content-Type: application/json**
+**Endpoint:** `GET http://your-domain.com/api/favorites/get.php?page=1&limit=5`
 
 ### 4. Add Favorite
+
+### Header
+**Authorization: Bearer your_generated_token**
+**Content-Type: application/json**
+
 **Endpoint:** `POST /api/favorites/add.php`
 - **Payload:**
   ```json
-  {
-      "user_id": 1,
-      "article_id": "123",
-      "title": "Example Article",
-      "url": "https://example.com"
-  }
+    {
+    "article_id": "12345",
+    "web_url": "https://example.com/article1",
+    "title": "Latest Tech News"
+    }
   ```
 
 ### 5. Remove Favorite
+
+### Header
+**Authorization: Bearer your_generated_token**
+**Content-Type: application/json**
+
 **Endpoint:** `DELETE /api/favorites/remove.php`
+- **Payload:**
+  ```json
+  {
+    "favorite_Id": 1
+  }
+  ```
+
+### 5. Search Artical
+
+### Header
+**Authorization: Bearer your_generated_token**
+**Content-Type: application/json**
+
+**Endpoint:** `GET /api/articles/search.php?query=tech&page=1`
 - **Payload:**
   ```json
   {
